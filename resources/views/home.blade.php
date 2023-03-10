@@ -13,9 +13,9 @@
                                 {{ session('status') }}
                             </div>
                         @endif
-                        <div class="d-flex flex-column">
-                            <a href="{{ route('books') }}" class="col-6 btn btn-primary m-2">Reservar una cita</a>
-                            <a href="">Ver mascotas</a>
+                        <div class="d-flex flex-column align-items-center">
+                            <a href="{{ route('books.index') }} " class="col-6 btn btn-primary m-2">Reservar una cita</a>
+                            <a href="{{ route('pets.index') }} " class="col-6 btn btn-primary m-2">Ver mascotas</a>
 
                         </div>
 

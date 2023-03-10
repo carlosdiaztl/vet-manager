@@ -12,4 +12,10 @@ class Book extends Model
     {
         return $this->belongsTo(User::class);
     }
+    protected $fillable = [
+        'date',
+        'hour',
+        'user_id',
+        'petName',
+    ];
 }

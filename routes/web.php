@@ -20,4 +20,5 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('books', [App\Http\Controllers\BookController::class, 'index'])->name('books');
+route::resource('pets', App\Http\Controllers\PetController::class)->names('pets');
+route::resource('books', App\Http\Controllers\BookController::class)->names('books');
