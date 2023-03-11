@@ -14,8 +14,9 @@ class Book extends Model
     }
     protected $fillable = [
         'date',
-        'hour',
+        'date_end',
         'user_id',
         'petName',
+        'type'
     ];
 }

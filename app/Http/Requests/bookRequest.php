@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
 class bookRequest extends FormRequest
@@ -15,6 +16,8 @@ class bookRequest extends FormRequest
         return false;
     }
 
+
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -22,15 +25,22 @@ class bookRequest extends FormRequest
      */
     public function rules(): array
     {
+        // return [
+        //     'date' => [
+        //         'required',
+        //         'date_format:Y-m-d',
+        //         Rule::unique('books')->where(function ($query) {
+        //             return $query->where('hour', $this->hour);
+        //         }),
+        //     ],
+        //     'hora' => 'required|date_format:H:i',
+        // ];
         return [
             'date' => [
                 'required',
-                'date_format:Y-m-d',
-                Rule::unique('books')->where(function ($query) {
-                    return $query->where('hour', $this->hour);
-                }),
+                'date_format:Y-m-d\TH:i',
+                Rule::unique('books'),
             ],
-            'hora' => 'required|date_format:H:i',
         ];
     }
 }

@@ -13,8 +13,9 @@ return new class extends Migration
     {
         Schema::create('books', function (Blueprint $table) {
             $table->id();
-            $table->date('date');
-            $table->time('hour');
+            $table->dateTime('date');
+            $table->dateTime('date_end');
+            $table->enum('type', ['consulta-basica', 'especializada', 'peluqueria']);
             $table->string('petName');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
