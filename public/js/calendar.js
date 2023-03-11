@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
     var calendarEl = document.getElementById("calendar");
     var calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: "dayGridMonth",
+        responsive: true,
 
         locale: "es",
         // esto agrega idioma
@@ -24,13 +25,16 @@ document.addEventListener("DOMContentLoaded", function () {
     calendar.render();
 });
 // let modal = document.getElementById("evento");
+// boton1 = document.getElementsByClassName("fc-listWeek-button");
+// console.log(boton1);
+// boton1.classList.add("hidden");
 // document.addEventListener("click", function ({ target }) {
 //     console.log(target);
-//     console.log(target.id);
 
-//     if (target.id.includes("fc-dom")) {
+//     if (target.classList.contains("fc-listWeek-button")) {
+//         // target.classList.add("hidden");
 //         console.log("yes");
-//         modal.style.display = "block";
+//         // modal.style.display = "block";
 //         // $("#evento").modal("show");
 //     }
 // });

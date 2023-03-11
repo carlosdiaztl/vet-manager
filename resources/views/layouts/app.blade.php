@@ -40,12 +40,14 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
-                        {{-- @if (optional(auth()->user())->isVet())
+                        @inject('admin', 'App\services\Admin')
+
+                        @if (optional(auth()->user())->admin)
                             <li class="nav-item">
 
-                                <a class="nav-link" href="{{ route('vet') }}">Ver citas</a>
+                                <a class="nav-link" href="{{ route('vet.index') }} ">Panel Vet</a>
                             </li>
-                        @endif --}}
+                        @endif
                         <li class="nav-item">
 
                             <a class="nav-link" href="{{ route('books.index') }}">Ver citas</a>

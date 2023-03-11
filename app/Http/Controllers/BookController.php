@@ -25,12 +25,14 @@ class BookController extends Controller
      */
     public function index()
     {
-        // dd(2);
+        // dd(auth()->user()->admin);
+
+
         // is vet is true ??
 
 
         // if(auth()->user()->isVet()){
-        //     $books= Book::all();
+        //     
         //     return view('vet.books',compact('books'));
         // }
         if (auth()->user()) {
@@ -58,7 +60,7 @@ class BookController extends Controller
      */
     public function store(Request $request)
     {
-        function notBetweenBookings($attribute, $value, $parameters,)
+        function notBetweenBookings($attribute, $value, $parameters)
         {
 
             $start_date = Carbon::parse($parameters[0]);
@@ -117,13 +119,19 @@ class BookController extends Controller
         // dd($book);
         Book::create($book);
         //
-        return redirect()->route('books.index')->withSuccess("Se ha agregado tu cita para el dia  {$request['fecha']} a las   con exito ");
+        return redirect()->route('books.index')->withSuccess("Se ha agregado tu cita para el dia  {$request['date']}  con exito ");
     }
     /**
      * Display the specified resource.
      */
     public function show(Book $book)
     {
+        if (auth()->user()->admin) {
+
+            $eventos =  Book::all();
+            // $event = Book::all();
+            return response()->json($eventos);
+        }
 
         $eventos =  auth()->user()->dates;
         // $event = Book::all();
@@ -136,7 +144,10 @@ class BookController extends Controller
      */
     public function edit(Book $book)
     {
-        return view('books.edit', compact('book'));
+        $pets = auth()->user()->pets;
+        // dd($pets);
+        // dd($book);
+        return view('books.edit', compact('book', 'pets'));
         //
     }
 
@@ -145,20 +156,61 @@ class BookController extends Controller
      */
     public function update(Request $request, Book $book)
     {
+        function notBetweenBookings2($attribute, $value, $parameters, $id)
+        {
+            $start_date = Carbon::parse($parameters[0]);
+            $end_date = Carbon::parse($parameters[1]);
+
+            $bookings = Book::where(function ($query) use ($start_date, $end_date) {
+                $query->whereBetween('date', [$start_date, $end_date])
+                    ->orWhereBetween('date_end', [$start_date, $end_date]);
+            })
+                ->where('id', '<>', $id) // exclude current booking being updated
+                ->get();
+            // dd($bookings, $id);
+            foreach ($bookings as $book) {
+                return false;
+            }
+            return true;
+        }
+
+        $fecha =  $request['date'];
+        $fecha_obj = DateTime::createFromFormat('Y-m-d\TH:i', $fecha);
+        $fecha_obj->add(new DateInterval('PT30M'));
+        $nueva_fecha = $fecha_obj->format('Y-m-d\TH:i');
+        $request['date_end'] = $nueva_fecha;
         $validatedData = $request->validate([
             'date' => [
                 'required',
                 'date_format:Y-m-d\TH:i',
-                Rule::unique('books')->ignore($book),
+                Rule::unique('books')->ignore($book->id),
+                function ($attribute, $value, $fail) use ($nueva_fecha, $fecha, $book) {
+                    $reservationAvailable = notBetweenBookings2($attribute, Carbon::parse($value), [Carbon::parse($fecha), Carbon::parse($nueva_fecha)], $book->id);
+                    if (!$reservationAvailable) {
+                        $fail('La fecha seleccionada u hora no está disponible.');
+                    }
+                },
+
             ],
             'date_end' => [
-                'required',
                 'date_format:Y-m-d\TH:i',
-                Rule::unique('books')->ignore($book),
-            ],
-            'mascotaName' => "required"
 
+            ],
+
+            'mascotaName' => "required",
+            'type' => "required|in:consulta-basica,especializada,peluqueria",
         ]);
+        $book->update(
+            [
+                'date' => $validatedData['date'],
+                'date_end' => $validatedData['date_end'],
+                'petName' => $validatedData['mascotaName'],
+                'type' => $validatedData['type'],
+                'user_id' => auth()->user()->id,
+            ]
+        );
+        return redirect()->route('books.index')->withSuccess("Tu cita ha quedado para el dia {$request['date']} ");
+
         //
     }
 
@@ -168,7 +220,7 @@ class BookController extends Controller
     public function destroy(Book $book)
     {
         $book->delete();
-        return redirect()->back()->withSuccess("Su reserva para el dia {$book->date} a las {$book->hour} ha sido eliminada  ");
+        return redirect()->back()->withSuccess("Su reserva para el dia {$book->date}  ha sido eliminada  ");
         //
     }
 }

@@ -25,23 +25,23 @@
                             </tr>
                         </thead>
                         <tbody class="table-border-bottom-0">
-                            @foreach ($books as $books)
+                            @foreach ($books as $book)
                                 <tr>
                                     <td>
-                                        {{ $books->id }}
+                                        {{ $book->id }}
                                     </td>
-                                    <td> {{ $books->date }}</td>
+                                    <td> {{ $book->date }}</td>
                                     <td>
-                                        {{ $books->type }}
+                                        {{ $book->type }}
                                     </td>
 
                                     <td class="">
                                         <div class="d-flex">
-                                            <a href="{{ route('books.edit', $books) }} "><img width="20px"
+                                            <a href="{{ route('books.edit', $book) }} "><img width="20px"
                                                     src="https://cdn-icons-png.flaticon.com/512/1827/1827933.png"
                                                     alt="">
                                             </a>
-                                            <form action="{{ route('books.destroy', $books) }}" method="POST">
+                                            <form action="{{ route('books.destroy', $book) }}" method="POST">
                                                 @method('DELETE')
                                                 @csrf
                                                 <button type="submit" class="list-group-item list-group-item-action px-2"

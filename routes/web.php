@@ -23,3 +23,4 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 route::resource('pets', App\Http\Controllers\PetController::class)->names('pets');
 route::resource('books', App\Http\Controllers\BookController::class)->names('books')->except('show');
 route::get('/books/mostrar', [App\Http\Controllers\BookController::class, 'show']);
+route::resource('vet', App\Http\Controllers\VetController::class)->names('vet')->except('show');
