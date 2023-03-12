@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
+    let formulario = document.getElementById("form1");
     var calendarEl = document.getElementById("calendar");
     var calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: "dayGridMonth",
@@ -14,14 +15,44 @@ document.addEventListener("DOMContentLoaded", function () {
             right: "dayGridMonth,timeGridWeek,listWeek",
         },
         events: "http://localhost/veterinary-app/public/books/mostrar",
+        // eventDataTransform: function (eventData) {
+        //     var extendedProps = eventData.extendedProps;
+        //     eventData.title = extendedProps.petName;
+        //     eventData.description = extendedProps.type;
+        //     eventData.user_id = extendedProps.user_id;
+        //     eventData.date_end = extendedProps.date_end;
+        //     return eventData;
+        // },
         dateClick: function (info) {
-            $("#evento").modal("show");
-            console.log("i");
+            formulario.reset();
+            formulario.start.value = info.dateStr;
 
-            // formulario.reset();
-            // formulario.start.value = info.dateStr;
+            // formulario.id.title = info.dateStr;
+        },
+        eventClick: function (info) {
+            var extendedProps = info.event.extendedProps;
+            console.log(extendedProps);
+            // document.getElementById("user_id").value = extendedProps.user_id;
+            document.getElementById("petName").value = extendedProps.petName;
+            document.getElementById("date_end").value = extendedProps.date_end;
+            document.getElementById("type").value = extendedProps.type;
+            document.getElementById("usuario").value = extendedProps.user.name;
+            document.getElementById("email").value = extendedProps.user.email;
+            document.getElementById("phone").value = extendedProps.user.number;
+            document.getElementById("start").value =
+                info.event.start.toLocaleTimeString();
+
+            document.getElementById("identificacion").value =
+                extendedProps.user.identification;
+            console.log(extendedProps.user.name);
+            console.log(extendedProps.user.email);
+            console.log(info.event.start.toLocaleTimeString());
+
+            // alert(`${extendedProps.type}, ${extendedProps.petName}`);
+            $("#evento").modal("show");
         },
     });
+
     calendar.render();
 });
 // let modal = document.getElementById("evento");

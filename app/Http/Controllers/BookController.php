@@ -128,7 +128,7 @@ class BookController extends Controller
     {
         if (auth()->user()->admin) {
 
-            $eventos =  Book::all();
+            $eventos =  Book::with('user')->get();
             // $event = Book::all();
             return response()->json($eventos);
         }
@@ -148,6 +148,7 @@ class BookController extends Controller
         // dd($pets);
         // dd($book);
         return view('books.edit', compact('book', 'pets'));
+        // return response()->json($book);
         //
     }
 
