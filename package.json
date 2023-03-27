@@ -12,5 +12,7 @@
         "sass": "^1.56.1",
         "vite": "^4.0.0"
     },
-    "dependencies": {}
+    "dependencies": {
+        "alpinejs": "^3.12.0"
+    }
 }

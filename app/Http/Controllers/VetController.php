@@ -26,7 +26,7 @@ class VetController extends Controller
 
 
         if (isVet()) {
-            $books = Book::with('user')->get();
+            $books = Book::with('user')->paginate(10);
             // dd($books);
             return view('vet.index', compact('books'));
         }

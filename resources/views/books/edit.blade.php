@@ -49,13 +49,29 @@
                             <div class="form-row mt-3">
                                 <label class="form-label"> Tipo de consulta</label>
                                 <select class="custom-select" name="type" required>
+                                    <option
+                                        {{ (old($book->type) == 'consulta-basica' ? 'selected' : $book->type == 'consulta-basica') ? 'selected' : '' }}
+                                        value="consulta-basica">
+                                        consulta-basica </option>
+                                    <option
+                                        {{ (old($book->type) == 'especializada' ? 'selected' : $book->type == 'especializada') ? 'selected' : '' }}
+                                        value="especializada">
+                                        especializada </option>
+                                    <option
+                                        {{ (old($book->type) == 'peluqueria' ? 'selected' : $book->type == 'peluqueria') ? 'selected' : '' }}
+                                        value="peluqueria">
+                                        peluqueria </option>
+
+                                    {{-- 
                                     <option value="{{ $book->type }}" selected>{{ $book->type }} </option>
+
+
                                     <option {{ old('type') }} value="consulta-basica">
                                         {{ 'consulta-basica' == $book->type ? '' : 'consulta-basica' }} </option>
                                     <option {{ old('type') }} value="especializada">
                                         {{ 'especializada' == $book->type ? '' : 'especializada' }} </option>
                                     <option {{ old('type') }} value="peluqueria">
-                                        {{ 'peluqueria' == $book->type ? '' : 'peluqueria' }} </option>
+                                        {{ 'peluqueria' == $book->type ? '' : 'peluqueria' }} </option> --}}
 
                                 </select>
                             </div>
