@@ -14,7 +14,7 @@ class UserControllerIndexTest extends TestCase
 {
     // este comando aplica datos temporales en el test
 
-    use RefreshDatabase;
+
     /**
      * A basic feature test example.
      */
