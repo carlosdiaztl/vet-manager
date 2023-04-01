@@ -6,12 +6,12 @@ jobs:
     # container: php:8.1-apache
 
     services:
-      mydatabase:
+      mysql:
         image: mysql:latest
         env:
           MYSQL_ALLOW_EMPTY_PASSWORD: false
           MYSQL_ROOT_PASSWORD: password
-          MYSQL_DATABASE: E-commerce
+          MYSQL_DATABASE: veterinary
         ports:
           - 3306:3306/tcp
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
